@@ -20,7 +20,8 @@ import (
 const (
 	busName    = "io.hass.os"
 	objectPath = "/io/hass/os"
-	sentryDsn  = "https://c74e811a96e4413a95caaaa5ae05f851@o427061.ingest.sentry.io/5710878"
+	// sentryDsn  = "https://c74e811a96e4413a95caaaa5ae05f851@o427061.ingest.sentry.io/5710878"
+	sentryDsn  = "https://47ea2fbffc454c6b877d1d41966873c7@o4505208810110976.ingest.sentry.io/4505208844386304"
 )
 
 var (
