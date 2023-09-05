@@ -9,7 +9,7 @@ on:
 
 
 env:
-  GOLANG_VERSION: "1.16"
+  GOLANG_VERSION: "1.20"
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Needed for changelog generation
 
@@ -33,20 +33,21 @@ jobs:
           go-version: ${{ env.GOLANG_VERSION }}
 
       - name: Run GoReleaser build
-        uses: goreleaser/goreleaser-action@v4.2.0
+        uses: goreleaser/goreleaser-action@v4.4.0
         if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         with:
           args: build --snapshot --clean
 
       - name: Run GoReleaser release
-        uses: goreleaser/goreleaser-action@v4.2.0
+        uses: goreleaser/goreleaser-action@v4.4.0
         if: github.event_name == 'release'
         with:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
-      - uses: robinraju/release-downloader@v1.7
+
+      - uses: robinraju/release-downloader@v1.8
         with:
           repository: ${{ github.repository }}
           latest: true
@@ -72,7 +73,7 @@ jobs:
           branch: test
 
       - name: Upload packets
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: debs
           path: debs
